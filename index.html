@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Timer</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #timer {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        #date {
+            font-size: 36px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="date"></div>
+    <div id="timer">Elapsed Time of LIVE: 00:00:00</div>
+
+    <script>
+        // Function to format time (hh:mm:ss)
+        function formatTime(seconds) {
+            let hours = Math.floor(seconds / 3600);
+            let minutes = Math.floor((seconds % 3600) / 60);
+            let remainingSeconds = seconds % 60;
+
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        // Get current date and day of the week
+        function updateDate() {
+            const currentDate = new Date();
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            const dateString = `${daysOfWeek[currentDate.getDay()]}, ${currentDate.toLocaleDateString()}`;
+            document.getElementById('date').innerText = dateString;
+        }
+
+        // Update elapsed time every second
+        let startTime = Date.now();
+        function updateTimer() {
+            const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('timer').innerText = "Elapsed Time of LIVE: " + formatTime(elapsedSeconds);
+        }
+
+        // Update the date once when the page loads
+        updateDate();
+
+        // Start the timer and update it every second
+        setInterval(updateTimer, 1000);
+    </script>
+
+</body>
+</html>
