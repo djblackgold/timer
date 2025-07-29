@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Timer</title>
+    <style>
+        body {
+            background-color: transparent;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #elapsed-time {
+            font-size: 40px;
+            margin: 10px;
+        }
+        #current-date {
+            color: red;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="elapsed-time">Elapsed Time: 00:00:00</div>
+    <div id="current-date"></div>
+
+    <script>
+        // Get the current date and format it
+        const currentDate = new Date();
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const formattedDate = `${daysOfWeek[currentDate.getDay()]}, ${currentDate.toLocaleDateString()}`;
+
+        // Display the current date
+        document.getElementById("current-date").innerText = formattedDate;
+
+        // Set the start time for the stream (when the page loads)
+        const startTime = new Date();
+
+        // Update the elapsed time every second
+        setInterval(function() {
+            const currentTime = new Date();
+            const elapsed = new Date(currentTime - startTime);
+
+            const hours = String(elapsed.getUTCHours()).padStart(2, '0');
+            const minutes = String(elapsed.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(elapsed.getUTCSeconds()).padStart(2, '0');
+
+            // Update the elapsed time display
+            document.getElementById("elapsed-time").innerText = `Elapsed Time: ${hours}:${minutes}:${seconds}`;
+        }, 1000);
+    </script>
+</body>
+</html>
