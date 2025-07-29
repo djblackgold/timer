@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Stream Timer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: transparent;
+      font-family: Arial, sans-serif;
+      color: red;
+      flex-direction: column;
+      text-align: center;
+    }
+    .timer, .date {
+      font-size: 96px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="timer" id="timer">Elapsed Time: 00:00:00</div>
+  <div class="date" id="date"></div>
+
+  <script>
+    // Initialize the start time of the stream
+    let startTime = Date.now();
+
+    // Function to update the timer every second
+    function updateTimer() {
+      let elapsedTime = Date.now() - startTime;
+      let hours = Math.floor(elapsedTime / (1000 * 60 * 60));
+      let minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+      
+      // Format time as HH:MM:SS
+      hours = String(hours).padStart(2, '0');
+      minutes = String(minutes).padStart(2, '0');
+      seconds = String(seconds).padStart(2, '0');
+      
+      document.getElementById('timer').textContent = `Elapsed Time of LIVE: ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Function to update the current date and day of the week
+    function updateDate() {
+      let currentDate = new Date();
+      let dayOfWeek = currentDate.toLocaleString('en-US', { weekday: 'long' });
+      let dateString = currentDate.toLocaleDateString();
+      
+      document.getElementById('date').textContent = `${dayOfWeek}, ${dateString}`;
+    }
+
+    // Update the time and date every second
+    setInterval(updateTimer, 1000);
+    setInterval(updateDate, 1000);
+    
+    // Run the functions once to display the initial time/date
+    updateTimer();
+    updateDate();
+  </script>
+</body>
+</html>
