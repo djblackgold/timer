@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f3f3;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .time-display {
+            font-size: 2em;
+            margin: 10px;
+        }
+        .date-display {
+            font-size: 1.5em;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="time-display" id="elapsed-time">Elapsed Time: 00:00:00</div>
+    <div class="date-display" id="current-date"></div>
+</div>
+
+<script>
+    // Get the start time (when the page loads)
+    const startTime = new Date();
+
+    // Function to format time as HH:MM:SS
+    function formatTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secondsLeft = seconds % 60;
+        return `${pad(hours)}:${pad(minutes)}:${pad(secondsLeft)}`;
+    }
+
+    // Pad numbers to always show two digits
+    function pad(number) {
+        return number < 10 ? '0' + number : number;
+    }
+
+    // Update elapsed time and current date
+    function updateTime() {
+        const now = new Date();
+        const elapsed = Math.floor((now - startTime) / 1000); // elapsed time in seconds
+
+        // Display elapsed time
+        document.getElementById("elapsed-time").textContent = "Elapsed Time: " + formatTime(elapsed);
+
+        // Display current date and day of the week
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const currentDate = now.toLocaleDateString('en-US', options);
+        document.getElementById("current-date").textContent = "Current Date: " + currentDate;
+    }
+
+    // Update every second
+    setInterval(updateTime, 1000);
+</script>
+
+</body>
+</html>
